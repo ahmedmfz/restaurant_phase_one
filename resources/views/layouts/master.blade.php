@@ -90,7 +90,7 @@
     @yield('content')
 
 
-    @if (Request::is('login') || Request::is('register'))
+    @if (Request::is('login') || Request::is('register') || Request::is('email/verify') || Request::is('password/reset') || Request::is('password/reset/{token}'))
       
     @else
      <!-- Contact Section -->

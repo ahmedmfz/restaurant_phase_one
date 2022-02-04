@@ -76,7 +76,7 @@
                         <div class="menu-item-name">
                             <a href="{{ route('product_one_show', $product->id )}}"> {{$product->name}} </a>
 
-                            <a href="javascript:void(0);" class="wishlist_btn" data-id="'{{$product->id}}'" onclick="add_wish('{{$product->id}}')">
+                            <a href="javascript:void(0);" class="wishlist_btn"  onclick="add_wish('{{$product->id}}')">
                                 <i class="far fa-heart" id="input-wish-{{$product->id}}" att="0"></i>
                             </a>
                         </div>
@@ -185,7 +185,6 @@
     }
     
     function check_name(product_id){
-        console.log('Wish List Worked');
         var inputWishElement = $(".wishlist_btn");
         var data = {
             'id' : product_id,

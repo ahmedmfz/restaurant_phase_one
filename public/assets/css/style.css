@@ -655,3 +655,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#779936', end
 	background-color: transparent;
 	color: yellowgreen;
 }
+.email_verification{
+	font-size: 25px;
+	margin: auto;
+	line-height: 1.7;
+}
+.email_reset{
+	font-size: 23px;
+	margin-bottom: 15px;
+}
+.reset_input{
+	margin-bottom: 15px;
+	
+}
+.reset_input_label{
+	font-size: 18px;
+}
