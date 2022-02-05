@@ -10,6 +10,7 @@ use App\Http\Controllers\Resturant\GalleryController;
 use App\Http\Controllers\Resturant\ProductController;
 use App\Http\Controllers\Dashboard\Cart\CartController;
 use App\Http\Controllers\Dashboard\Order\OrderController;
+use App\Http\Controllers\Dashboard\User\UserController;
 use App\Http\Controllers\Dashboard\Wish\WishListController;
 
 /*
@@ -39,8 +40,9 @@ Route::get('/product/{id}', [ProductController::class , 'show'])->name('product_
 Route::middleware('auth','verified')->group(function () {
 
     // wish route 
+    Route::get('/wishlist', [WishListController::class , 'index'])->name('wishlist');
     Route::post('/wishlist', [WishListController::class , 'store'])->name('wish.store');
-    Route::post('/wishlist/check', [WishListController::class , 'check_name'])->name('wish.check');
+    Route::post('/wishlist/destroy', [WishListController::class , 'destroy'])->name('wish.destroy');
 
 
     //cart route
@@ -53,6 +55,10 @@ Route::middleware('auth','verified')->group(function () {
     //order route
     Route::get('/order',[OrderController::class,'index'])->name('order');
     Route::post('/order',[OrderController::class,'store'])->name('order.store');
+
+    //user route 
+    Route::get('/user/{user}',[UserController::class,'show'])->name('user.show');
+    Route::get('/user/{user}/orders',[UserController::class,'old_order'])->name('user.orders');
 
 });
 

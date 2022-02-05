@@ -647,9 +647,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#779936', end
 	color: #333;
 }
 
-.cart-form{
-
+.list_login{
+	margin: 10px 15px 0 15px;
 }
+
 .cart{
 	border: none;
 	background-color: transparent;
@@ -670,4 +671,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#779936', end
 }
 .reset_input_label{
 	font-size: 18px;
+}
+.wish_list_color{
+	color: red;
 }

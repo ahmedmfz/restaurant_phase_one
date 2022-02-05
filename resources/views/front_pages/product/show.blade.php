@@ -52,11 +52,22 @@
                                         <ins>${{$product->price}}</ins> <del>$100.00</del>
                                     </div>    
                                     
-                                    <form action="" class="cart">
+                                    <form action="{{ route('cart.store') }}" method="POST" class="cart">
+                                        @csrf
+                                        
+                                        @if(!in_array($product->id , $cart_id))
                                         <div class="quantity">
                                             <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
                                         </div>
-                                        <button class="add_to_cart_button" type="submit">Add to cart</button>
+                                            <input type="hidden" value="{{ $product->id }}" name="id" id="id">
+                                            <input type="hidden" value="{{ $product->name }}" name="name" id="name">
+                                            <input type="hidden" value="{{ $product->price }}" name="price" id="price">
+                                            <input type="hidden" value="2" name="image" id="image">
+                                        
+                                            <button class="add_to_cart_button" type="submit">Add to cart</button>
+                                        @else
+                                            <button class="add_to_cart_button" type="button" disabled>Added</button>
+                                        @endif
                                     </form>   
                                     
                                     <div class="product-inner-category">

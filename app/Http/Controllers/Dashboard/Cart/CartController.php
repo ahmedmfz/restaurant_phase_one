@@ -8,17 +8,15 @@ use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
+    
     public function cartList()
     {
         $cartItems = \Cart::getContent();
-        // dd($cartItems);
         return view('front_pages.cart.index', compact('cartItems'));
     }
 
-
     public function addToCart(Request $request)
     {
-
         \Cart::add([
             'id' => $request->id,
             'name' => $request->name,
@@ -28,9 +26,7 @@ class CartController extends Controller
                 'image' => $request->image,
             )
         ]);
-        session()->flash('success', 'Product is Added to Cart Successfully !');
-
-        return back();
+        return response(['data'=> \Cart::getTotalQuantity() , 'cart_status'=>$this->check_in_cart($request->id)]);
     }
 
     public function updateCart(Request $request)
@@ -45,23 +41,32 @@ class CartController extends Controller
             ]
         );
 
-        return response()->json(['data'=>'success']);
+        return response(['data'=> \Cart::getTotalQuantity() ,'qty' => $request->quantity]);
     }
 
     public function removeCart(Request $request)
     {
         \Cart::remove($request->id);
-        session()->flash('success', 'Item Cart Remove Successfully !');
-
-        return back();
+        return response(['data'=> \Cart::getTotalQuantity()]);
     }
 
     public function clearAllCart()
     {
         \Cart::clear();
-
-        session()->flash('success', 'All Item Cart Clear Successfully !');
-
-        return redirect()->route('cart.list');
+        return response(['data'=> \Cart::getTotalQuantity()]);
     }
+
+    public function check_in_cart($id)
+    {
+
+        $cartItems = \Cart::getContent();
+        foreach($cartItems as $key => $cart){
+            $result[] = $key;
+        }
+        if(in_array($id , $result)){
+            return true;
+        }
+        return false;
+    }
+
 }

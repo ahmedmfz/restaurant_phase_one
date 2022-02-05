@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWishListsTable extends Migration
+class CreateProductUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateWishListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('wish_lists', function (Blueprint $table) {
-            $table->id();
-            $table->string('name_product');
+        Schema::create('product_user', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateWishListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wish_lists');
+        Schema::dropIfExists('product_user');
     }
 }

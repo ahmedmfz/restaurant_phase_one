@@ -14,10 +14,9 @@
     <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-touch-icon.png')}}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/img/apple-touch-icon-72x72.png')}}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/img/apple-touch-icon-114x114.png')}}">
-    
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.css')}}">
-    
+
+
+
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/all.css')}}">
 
     <!-- Stylesheet
@@ -25,6 +24,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/nivo-lightbox/nivo-lightbox.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/nivo-lightbox/default.css')}}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.css')}}">
+
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700" rel="stylesheet">
@@ -45,7 +47,8 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Touché</a> </div>
+                <a class="navbar-brand page-scroll" href="#page-top">Touché</a>
+            </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -57,27 +60,48 @@
                     <li><a href="{{ url('/contact')}}" class="page-scroll">Contact</a></li>
                     <li>
                         <a href="{{ route('cart.list')}}"><i class="fas fa-shopping-cart icon"></i>
-                            <span class="badge bg-secondary"> {{ Cart::getTotalQuantity()}}</span>
+                            <span class="badge bg-secondary" id="cart"> {{ Cart::getTotalQuantity() }}</span>
                         </a>
                     </li>
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-                    @else
+                    @auth
                         <li>
-                            <a  href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                            <a href="{{ route('wishlist')}}"><i class="far fa-heart icon"></i>
+                                <span class="badge bg-secondary" id="wish"> {{ count( auth()->user()->wishlists )}}</span>
                             </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
                         </li>
+                    @endauth
+            
+                    @guest
+                    @if (Route::has('login'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    </li>
+                    @endif
+                    @else
+                    <li>
+                        <div class="list_login">
+                            <div class="dropdown">
+                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                   {{auth()->user()->username}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ route('user.show', auth()->user()->id)}}">Profile</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ route('user.orders', auth()->user()->id)}}">Old Orders</a></li>
+                                    <li  role="presentation">
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
                     @endguest
                 </ul>
             </div>
@@ -86,14 +110,14 @@
     </nav>
 
 
-    
+
     @yield('content')
 
 
     @if (Request::is('login') || Request::is('register') || Request::is('email/verify') || Request::is('password/reset') || Request::is('password/reset/{token}'))
-      
+
     @else
-     <!-- Contact Section -->
+    <!-- Contact Section -->
     <div id="contact" class="text-center">
         <div class="container">
             <div class="section-title text-center">
@@ -103,24 +127,24 @@
             </div>
             <div class="col-md-10 col-md-offset-1">
 
-                <form  method="POST" action="{{ url('contact')}}" >
+                <form method="POST" action="{{ url('contact')}}">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text"  name="name" class="form-control" placeholder="Name" required="required">
+                                <input type="text" name="name" class="form-control" placeholder="Name" required="required">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="email"  name="email" class="form-control" placeholder="Email" required="required">
+                                <input type="email" name="email" class="form-control" placeholder="Email" required="required">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <textarea name="message"  class="form-control" rows="4" placeholder="Message" required></textarea>
+                        <textarea name="message" class="form-control" rows="4" placeholder="Message" required></textarea>
                         <p class="help-block text-danger"></p>
                     </div>
                     <button type="submit" class="btn btn-custom btn-lg">Send Message</button>
@@ -168,7 +192,7 @@
             </div>
         </div>
     </div>
-    
+
     <script type="text/javascript" src="{{ asset('assets/js/jquery.1.11.1.js')}}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap.js')}}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/nivo-lightbox.js')}}"></script>
