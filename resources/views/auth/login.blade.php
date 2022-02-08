@@ -55,9 +55,16 @@
 		          <div class="col-md-12">
 		          	<div class="control-wrapper">
 		          		<input type="submit" value="Log in" class="btn btn-info">
+
                         @if (Route::has('password.request'))
                              <a href="{{ route('password.request') }}" class="text-right pull-right">Forgot password?</a>
                         @endif
+						<div class="row">
+							<div class="col-md-12" style="margin-top: 20px;">
+							<a href="{{ url('redirect/facebook')}}" class="btn btn-primary" style="color:white;"><i class="fab fa-facebook-f"></i>  Login with facebook </a>
+		          			<a href="{{ url('redirect/google')}}" class="btn" style="border:1px solid #ccc;"> <i class="fab fa-google"></i>  Login with Google </a>
+							</div>
+						</div>
 		          	</div>
 		          </div>
 		        </div>
@@ -65,6 +72,7 @@
 		      <div class="text-center">
 		      	<a href="{{ url('/register')}}" class="templatemo-create-new">Create new account <i class="fa fa-arrow-circle-o-right"></i></a>	
 		      </div>
+			  
 		</div>
 	</div>
   

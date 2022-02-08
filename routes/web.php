@@ -8,9 +8,10 @@ use App\Http\Controllers\Resturant\MenuController;
 use App\Http\Controllers\Resturant\ContactController;
 use App\Http\Controllers\Resturant\GalleryController;
 use App\Http\Controllers\Resturant\ProductController;
+use App\Http\Controllers\Auth\LoginsocialiteController;
 use App\Http\Controllers\Dashboard\Cart\CartController;
-use App\Http\Controllers\Dashboard\Order\OrderController;
 use App\Http\Controllers\Dashboard\User\UserController;
+use App\Http\Controllers\Dashboard\Order\OrderController;
 use App\Http\Controllers\Dashboard\Wish\WishListController;
 
 /*
@@ -64,3 +65,7 @@ Route::middleware('auth','verified')->group(function () {
 
 Auth::routes(['verify'=>true ,'reset' => true ,]);
 
+
+Route::get('/redirect/{provider}',[LoginsocialiteController::class,'redirect']);
+
+Route::get('/callback/{provider}',[LoginsocialiteController::class,'callback']);

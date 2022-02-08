@@ -27,7 +27,7 @@ class HomeController extends Controller
         foreach($cartItems as $key => $cart){
              $cart_id[] =  $key ;
         }
-        return $cart_id;
+        return !empty($cart_id) ? $cart_id : [];
     }
     
 
